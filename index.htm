@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>BotUI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="./node_modules/botui/build/botui.min.css" />
+    <link rel="stylesheet" href="./node_modules/botui/build/botui-theme-default.css" />
+  	<style>
+		body { margin: 0 auto; max-width: 500px; }
+	</style>
+  </head>
+  <body>
+
+	  <div id="my-botui-app">
+			<bot-ui></bot-ui>
+	  </div>
+
+    <script src="https://cdn.jsdelivr.net/vue/latest/vue.min.js"></script>
+    <script src="./node_modules/botui/build/botui.min.js"></script>
+
+  	<script>
+		var botui = new BotUI('my-botui-app');
+		botui.message.add({ content: 'hello. I am a timesheet bot.' });
+		botui.message.add({
+			content: 'Did you do exactly the same as you did last week?'
+		}).then(function () { // wait till its shown
+			return botui.action.button({ // show 'text' action
+				action: [{
+					text: 'Yeah!', value: 'yes', type: 'text', delay: 200
+				}, {
+					text: 'Remind me what I did', value: 'remind', type: 'text', delay: 200
+				}]
+			});
+		}).then(message => {
+			botui.message.add({ content: "ok - I'll record that. Have a nice week." });
+		})
+	</script>
+  </body>
+</html>
