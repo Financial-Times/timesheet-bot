@@ -21,20 +21,40 @@
 
   	<script>
 		var botui = new BotUI('my-botui-app');
-		botui.message.add({ content: 'hello. I am a timesheet bot.' });
+		botui.message.add({ content: 'Hello. I am a timesheet bot.' });
 		botui.message.add({
 			content: 'Did you do exactly the same as you did last week?'
 		}).then(function () { // wait till its shown
 			return botui.action.button({ // show 'text' action
 				action: [{
-					text: 'Yeah!', value: 'yes', type: 'text', delay: 200
+					text: 'Yeah!', value: true, type: 'text', delay: 200
 				}, {
-					text: 'Remind me what I did', value: 'remind', type: 'text', delay: 200
+					text: 'Remind me what I did', value: false, type: 'text', delay: 200
 				}]
 			});
 		}).then(message => {
-			botui.message.add({ content: "ok - I'll record that. Have a nice week." });
-		})
+			console.log(message);
+			if (message.value) {
+				botui.message.add({ content: "OK - I'll record that. Have a nice week." });
+				throw new Error({});
+			} else {
+				return botui.message.add({ content: "Right - let me have a look" });
+			}
+		}).then(f => {
+			return botui.message.add({ content: "So", delay: 1000 });
+		}).then(f => {
+			return botui.message.add({ content: 'You spent half your time working on Video, and half on Membership.', delay: 1000 });
+		}).then(f => {
+			return botui.message.add({ content: "Shall I submit it this for this week?", delay: 500 });
+		}).then(f => {
+			return botui.action.button({ // show 'text' action
+				action: [{
+					text: 'Yeah!', value: true, type: 'text', delay: 200
+				}, {
+					text: 'Nope', value: false, type: 'text', delay: 200
+				}]
+			});
+		}).catch()
 	</script>
   </body>
 </html>
