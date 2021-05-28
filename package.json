@@ -8,7 +8,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "botkit": "^0.5.2",
+    "botkit": "^4.0.0",
     "botui": "^0.3.0"
   },
   "devDependencies": {},
